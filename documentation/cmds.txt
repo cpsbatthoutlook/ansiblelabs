@@ -1,0 +1,17 @@
+##Run interactive 
+ans host -a "date"  \
+	-f 3  ## parallel
+	-u user  ##run as user
+	-b    # become as 
+
+ #Note order matter.. -b come first then -a 
+ ans all -b -a   "date" -o
+
+
+
+## Gather facts from all nodes
+ans all -m setup
+
+
+## sudo password
+ ans bns -b  --extra-vars ansible_sudo_pass="tmp123" -a "hostname"

@@ -1,0 +1,31 @@
+
+wget https://pypi.python.org/packages/source/P/PyYAML/PyYAML-3.10.tar.gz
+wget  https://pypi.python.org/packages/source/J/Jinja2/Jinja2-2.6.tar.gz
+tar -xvf PyYAML-3.10.tar.gz && tar -xvf Jinja2-2.6.tar.gz
+         (cd Jinja2-2.6 && python setup.py install)
+         (cd PyYAML-3.10 && python setup.py install)
+git clone https://github.com/ansible/ansible /opt/ansible
+
+
+~/.bashrc
+# Ansible settings
+ANSIBLE=/opt/ansible
+export PATH=$PATH:$ANSIBLE/bin
+export PYTHONPATH=$ANSIBLE/lib
+export ANSIBLE_LIBRARY=$ANSIBLE/library
+export ANSIBLE_SSH_ARGS='-o ControlMaster=no'
+
+
+
+curl
+python (2.7.x)
+python-jinja
+python-crypto
+python-openssl
+python-setuptools
+git (1.7.x)
+vim
+openssh
+openssl
+openssl-devel
+gcc-

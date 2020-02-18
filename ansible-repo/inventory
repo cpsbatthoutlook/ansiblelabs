@@ -1,0 +1,7 @@
+[apps]
+app1 ansible_user=vagrant
+app2 ansible_user=vagrant
+[masters]
+master ansible_user=vagrant
+[dbs]
+db ansible_user=vagrant

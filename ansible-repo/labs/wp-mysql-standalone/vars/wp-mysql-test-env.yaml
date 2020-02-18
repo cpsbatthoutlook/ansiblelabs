@@ -1,0 +1,11 @@
+#https://galaxy.ansible.com/geerlingguy/mysql
+mysql_root_password: running
+mysql_databases:
+  - name: wordpress
+    encoding: latin1
+    collation: latin1_general_ci
+mysql_users:
+  - name: wordpress
+    host: "%"
+    password: wordpress
+    priv: '*.*:ALL,GRANT'

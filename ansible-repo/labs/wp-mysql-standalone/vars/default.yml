@@ -1,0 +1,24 @@
+---
+#System Settings
+# php_modules: [ 'php-curl', 'php-gd', 'php-mbstring', 'php-xml', 'php-xmlrpc', 'php-soap', 'php-intl', 'php-zip' ]
+
+#MySQL Settings
+mysql_db_host: "db"
+mysql_root_password: "running"
+mysql_db: "wordpress"
+mysql_user: "wordpress"
+mysql_password: "wordpress"
+
+#HTTP Settings
+http_host: "pragra"
+http_conf: "pragra.conf"
+http_port: "80"
+APACHE_LOG_DIR: "/var/log/httpd"
+
+##Repo Details
+epel_repo_url: "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+epel_repo_gpg_key_url: "https://dl.fedoraproject.org/pub/epel/RPM-GPG-KEY-EPEL-{{ ansible_distribution_major_version }}"
+epel_repofile_path: "/etc/yum.repos.d/epel.repo"
+php_repo_url: "http://rpms.remirepo.net/enterprise/remi-release-7.rpm"
+php_repofile_path: "/etc/yum.repos.d/remi-release-7.repo"
+

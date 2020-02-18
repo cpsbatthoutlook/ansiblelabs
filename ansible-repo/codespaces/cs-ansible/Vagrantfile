@@ -1,0 +1,41 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+
+  config.vm.box = "ubuntu/xenial64"
+
+    config.vm.define "master" do |cs|
+        cs.vm.hostname = "ansible-master"
+        cs.vm.network "private_network", ip: "192.168.56.101"
+        config.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "1568"]
+            vb.customize ["modifyvm", :id, "--cpus", "2"]
+        end
+        cs.vm.provision "shell", path: "scripts/docker.sh"
+        cs.vm.provision "shell", path: "scripts/codespace.sh"
+  end
+
+    config.vm.define "node1" do |cs1|
+        cs1.vm.hostname = "ansible-node1"
+        cs1.vm.network "private_network", ip: "192.168.56.102"
+        config.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "512"]
+            vb.customize ["modifyvm", :id, "--cpus", "1"]
+        end
+        cs1.vm.provision "shell", path: "scripts/after.sh"
+        #cs1.vm.provision "shell", path: "scripts/codespace.sh"
+    end
+
+    config.vm.define "node2" do |cs2|
+        cs2.vm.hostname = "ansible-node2"
+        cs2.vm.network "private_network", ip: "192.168.56.102"
+        config.vm.provider :virtualbox do |vb|
+            vb.customize ["modifyvm", :id, "--memory", "512"]
+            vb.customize ["modifyvm", :id, "--cpus", "1"]
+        end
+        cs2.vm.provision "shell", path: "scripts/after.sh"
+        #cs2.vm.provision "shell", path: "scripts/codespace.sh"
+    end
+
+end

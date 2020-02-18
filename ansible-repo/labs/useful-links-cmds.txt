@@ -1,0 +1,12 @@
+Cheatsheet: https://www.digitalocean.com/community/cheatsheets/how-to-use-ansible-cheat-sheet-guide
+
+Start from a task
+ansible-playbook myplaybook.yml --start-at-task="Set Up Nginx"  
+
+#Selective tasks
+ansible-playbook myplaybook.yml --tags=mysql,nginx  ## 
+ansible-playbook myplaybook.yml --skip-tags=mysql
+
+
+##Get info
+ansible-playbook myplaybook.yml [--list-tasks]  [--list-hosts] [--list-tags]

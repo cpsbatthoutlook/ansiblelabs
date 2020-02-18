@@ -1,0 +1,51 @@
+Ansible roles:
+ ?? should be in ./roles folder
+ ?? tasks -> playbooks -> Roles
+
+Why:
+1. reduces Stynax errors
+2. Put strucutre which is easily digested and editable
+3. Enable sharing
+
+folder structure:
+ - defaults : default variables for the role
+ - files : static files 
+ - templates : Dynamic files Jinja2 tempklates lang
+ - handlers : Tasks and Triggers like notify, restart, etc.
+ - meta : roles specific details like @theer, supported platforms, dependencies
+ - tasks : core logic like package req, file cp, restart <<< most important
+ - vars : variables here are higher priority over default vars, 
+ - tests : ??
+
+
+ Every folder has main.yml which is default code to run
+
+
+?? Ansible logging, verbose, 
+
+
+How:
+ ansg init  [folder/]apache [--offline ]
+ Edit files
+ ansp 
+
+------------- Ansible-Galaxy --------------
+
+#install role
+ansg install matic-insurance.nginx_container
+
+#Create role
+ansg init <role name> --offline
+
+#list roles in $(pwd)/roles - folder should exist
+ansg list -p `pwd`/roles
+   #or change the ansible.cfg
+[defaults]
+roles_path = /root/ansconfig/roles
+
+
+
+##Apply role 
+role_name=role.yaml
+ansp [-vvv ]${role_name} --syntax-check [ --limit @/tmp/role.retry ]
+

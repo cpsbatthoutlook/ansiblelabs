@@ -1,0 +1,8 @@
+- hosts: dbs  #https://galaxy.ansible.com/geerlingguy/mysql
+  become: yes
+  vars_files:
+    - vars/wp-mysql-test-env.yaml    
+  roles:
+    - { role: geerlingguy.mysql }
+
+    

@@ -1,0 +1,50 @@
+
+##How to install Python3 on CentOs7
+yum -y install build-essential git python-dev python-pip
+sudo yum -y install centos-release-scl rh-python36
+scl enable rh-python36 bash ## Chg Shell environment using /opt/rh/rh-python36/enable
+   ##https://docs.ansible.com/ansible/latest/scenario_guides/guide_gce.html
+
+##Install Ansible
+yum -y install ansible
+
+##Gcp
+pip install --upgrade pip
+pip install googleauth requests #GCP Authentication
+export ANSIBLE_HOST_KEY_CHECKING=False ##optional
+
+# Exchange SSH keys
+# Edit the /etc/hosts for node names
+#   update the ansible.cfg ## ansible --version
+ # Setup inventory  (refer to the test env with jenkins data)
+  
+
+# Aliases
+alias ans="ansible "
+alias ansd="ansible-doc "
+alias ansg="ansible-galaxy "
+alias ansp="ansible-playbook  "
+
+
+##Install Oracle Python SDK
+  #https://docs.cloud.oracle.com/iaas/Content/API/SDKDocs/ansiblegetstarted.htm?Highlight=clone
+  Download and Extractthe filesfrom the https://github.com/oracle/oci-python-sdk/releases
+	pip install oci-*-py2.py3-none-any.whl
+  verify: 
+	python -c "import ssl; print(ssl.OPENSSL_VERSION)":
+
+   
+##CentOS 
+Run in docker
+yum -y update
+yum -y install epel-release ansible python
+
+Pasted from <https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-centos-7> 
+
+
+#Ubuntu
+ apt-add-repository ppa:ansible/ansible ##Othervwise you will get ansible 2.0.0.2
+ apt-get -y update
+ apt-get -y install ansible
+
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-16-04
