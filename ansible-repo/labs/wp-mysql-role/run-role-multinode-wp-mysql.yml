@@ -1,0 +1,6 @@
+---
+  - name: Setting up servers
+    hosts: db
+    become: true
+    roles:
+      - { role: multinode-wp-mysql.yaml }

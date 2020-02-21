@@ -1,0 +1,7 @@
+---
+# tasks file for multinode-wp-mysql.yaml
+  -  import_tasks: common.yml
+  -  import_tasks: mysqldb.yml
+  -  import_tasks: wordpress.yml
+...
+

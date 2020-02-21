@@ -1,0 +1,12 @@
+---
+# vars file for multinode-wp-mysql.yaml
+MYSQL_ROOT_PASSWORD: "running"
+MYSQL_PASSWORD: "wordpress"
+MYSQL_DATABASE: "wordpress"
+MYSQL_USER: "wordpress"
+WORDPRESS_DB_HOST: "mysqldb"
+WORDPRESS_DB_USER: "wordpress"
+WORDPRESS_DB_PASSWORD: "wordpress"
+WORDPRESS_DB_NAME: "wordpress"   
+running: "started"
+              

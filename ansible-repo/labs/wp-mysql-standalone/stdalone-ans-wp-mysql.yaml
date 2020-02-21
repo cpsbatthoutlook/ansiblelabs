@@ -1,0 +1,67 @@
+---
+  - name: Mysql Version
+    ## https://docs.ansible.com/ansible/latest/modules/docker_container_module.html#examples
+    #Docker engine Docker version 1.13.1, build 4ef4b30/1.13.1
+    #https://hub.docker.com/_/mysql
+    hosts: db
+    become: true
+    gather_facts: no
+    tasks: 
+    - name : Ensure docker daemon is up and running
+      service:
+          name: docker
+          enabled: yes
+          state: restarted          
+    - name: Install-Run-Mysql
+      docker_container:
+              name: mysqldb 
+              env: 
+                  MYSQL_ROOT_PASSWORD: "running"
+                  MYSQL_DATABASE: "wordpress"
+                  MYSQL_USER: "wordpress"
+                  MYSQL_PASSWORD: "wordpress"                
+              image: mysql:5.7 
+              state: "{{ running }}" # not required. choices: absent;present;stopped;started. 
+              # env_file: C:/VM/ansibleLab/kube/workarea/dcom1/ans-wp-mysql_env.yaml # not required. Path to a file, present on the target, containing environment variables I(FOO=BAR).,If variable also present in C(env), then C(env) value will override.
+              restart: true # not required. Use with started state to force a matching container to be stopped and restarted.
+              volumes:
+              - /var/lib/mysql
+
+  - name: Wordpress Version
+    ## https://docs.ansible.com/ansible/latest/modules/docker_container_module.html#examples
+    ## https://hub.docker.com/_/wordpress
+    hosts: db
+    become: true
+    gather_facts: no
+    tasks: 
+    - name : Ensure docker daemon is up and running
+      service:
+          name: docker
+          enabled: yes
+          state: restarted          
+    - name: Install-Run-WPress
+      docker_container:
+              name: wp 
+              env: 
+                  WORDPRESS_DB_HOST: "mysqldb"
+                  WORDPRESS_DB_USER: "wordpress"
+                  WORDPRESS_DB_PASSWORD: "wordpress"
+                  WORDPRESS_DB_NAME: "wordpress"                
+              image: wordpress:5.3.2-php7.2-apache
+              links: 
+               - "mysqldb"
+              # networks:  # not required. List of networks the container belongs to.,Each network is a dict with keys C(name), C(ipv4_address), C(ipv6_address), C(links), C(aliases).,For each network C(name) is required, all other keys are optional.,If included, C(links) or C(aliases) are lists.,For examples of the data structure and usage see EXAMPLES below.,To remove a container from one or more networks, use the C(purge_networks) option.,Note that as opposed to C(docker run ...), M(docker_container) does not remove the default network if C(networks) is specified. You need to explicity use C(purge_networks) to enforce the removal of the default network (and all other networks not explicitly mentioned in C(networks)).
+              #  - name: host
+              # network_mode: host # not required.  "bridge", "host", "none" or "container:<name|id>"
+              state: "{{ running }}" # not required. choices: absent;present;stopped;started. 
+              volumes:
+              - /var/www/html1
+              exposed_ports: # not required. List of additional container ports which informs Docker that the container listens on the specified network ports at runtime. If the port is already exposed using EXPOSE in a Dockerfile, it does not need to be exposed again.
+               - "80"
+              ports: 
+              - "18080:80"
+              restart: true # not required. Use with started state to force a matching container to be stopped and restarted.
+              # pull: no # not required. If true, always pull the latest version of an image. Otherwise, will only pull an image when missing.
+
+...
+

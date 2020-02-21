@@ -1,0 +1,16 @@
+---
+- name: Install-Run-Mysql
+  docker_container:
+          name: mysqldb 
+          image: mysql:5.7 
+          env: 
+                  MYSQL_ROOT_PASSWORD: "{{ MYSQL_ROOT_PASSWORD }}"
+                  MYSQL_DATABASE: "{{ MYSQL_DATABASE }}"
+                  MYSQL_USER: "{{ MYSQL_USER }}"
+                  MYSQL_PASSWORD: "{{ MYSQL_PASSWORD }}"   
+          state: "{{ running }}" # not required. choices: absent;present;stopped;started. 
+          # env_file: C:/VM/ansibleLab/kube/workarea/dcom1/ans-wp-mysql_env.yaml # not required. Path to a file, present on the target, containing environment variables I(FOO=BAR).,If variable also present in C(env), then C(env) value will override.
+          restart: true # not required. Use with started state to force a matching container to be stopped and restarted.
+          volumes:
+          - /var/lib/mysql
+...

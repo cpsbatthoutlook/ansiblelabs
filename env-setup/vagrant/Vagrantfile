@@ -1,19 +1,25 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-$XXscript = <<SCRIPT
+$script = <<SCRIPT
 sudo mv hosts /etc/hosts
 chmod 0600 /home/vagrant/.ssh/id_rsa
 usermod -a -G vagrant ubuntu
 cp -Rvf /home/vagrant/.ssh /home/ubuntu
 chown -Rvf ubuntu /home/ubuntu
+yum -y install epel-release
 yum -y update
 yum -y install python-minimal python-apt ansible
 yum -y install screen curl wget sysstat tcpdump
+yum -y install --enablerepo=epel docker jq xmlstarlet python-pip
+python -m pip install --upgrade pipp
+pip install docker
+yum -y remove epel-release
+yum -y clean all
 SCRIPT
 
 
-$script = <<SCRIPT
+$script1 = <<SCRIPT
 cat ansible-hosts >> /etc/hosts
 cat ssh-publickey >> /home/vagrant/.ssh/authorized_keys
 SCRIPT
@@ -31,8 +37,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Application server 1.
     config.vm.define "master" do |app|
         app.vm.hostname = "ansible-master"
-        app.vm.box = "ansibleLabmaster1.box"
-        #app.vm.box = "geerlingguy/centos7"
+        #app.vm.box = "ansibleLabmaster1.box"
+        app.vm.box = "geerlingguy/centos7"
         app.vm.network :private_network, ip: "192.168.56.100"
         app.vm.synced_folder "./kube/", "/kube"
     end
@@ -41,15 +47,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Application server 1.
     config.vm.define "app1" do |app|
         app.vm.hostname = "orc-app1.dev"
-        app.vm.box = "ansibleLabmaster1.box"
-        #app.vm.box = "geerlingguy/centos7"
+        #app.vm.box = "ansibleLabmaster1.box"
+        app.vm.box = "geerlingguy/centos7"
         app.vm.network :private_network, ip: "192.168.56.104"
     end
 
     # Application server 2.
     config.vm.define "app2" do |app|
-        app.vm.hostname = "orc-app2.dev"
-        #app.vm.box = "geerlingguy/centos7"
+        #app.vm.hostname = "orc-app2.dev"
+        app.vm.box = "geerlingguy/centos7"
         app.vm.box = "ansibleLabmaster1.box"
         app.vm.network :private_network, ip: "192.168.56.105"
     end
@@ -57,9 +63,11 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     # Database server.
     config.vm.define "db" do |db|
         db.vm.hostname = "orc-db.dev"
-        #db.vm.box = "geerlingguy/centos7"
-        db.vm.box = "ansibleLabmaster1.box"
+        db.vm.box = "geerlingguy/centos7"
+        #db.vm.box = "ansibleLabmaster1.box"
         db.vm.network :private_network, ip: "192.168.56.106"
+        #db.vm.provision "shell", inline: $script1
+        #db.vm.provision "shell", inline: $script
     end
  end
 
