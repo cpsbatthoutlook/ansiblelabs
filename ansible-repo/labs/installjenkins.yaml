@@ -1,0 +1,10 @@
+---
+- name: Install Jenkins
+  hosts: localhost
+  become: yes
+  vars:
+    jenkins_hostname: ec2-52-15-183-112.us-east-2.compute.amazonaws.com
+  roles:
+    - role: geerlingguy.java
+    - role: geerlingguy.jenkins
+...
